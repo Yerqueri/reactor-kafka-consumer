@@ -2,18 +2,15 @@ package com.yerqueri.reactorkafkaexample.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yerqueri.reactorkafkaexample.Load;
 import com.yerqueri.reactorkafkaexample.ReceiverRecordException;
 import com.yerqueri.reactorkafkaexample.model.EventModel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.kafka.receiver.ReceiverOffset;
 import reactor.kafka.receiver.ReceiverRecord;
 
 import javax.annotation.PostConstruct;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * Created by Gopi K Kancharla
@@ -23,22 +20,22 @@ import java.util.UUID;
 @Slf4j
 public class MessageProcessor {
 
+    Random r = new Random();
+
     @PostConstruct
     public void reactorConsumer() {
         log.info("Message processor loaded");
     }
 
-    Random r = new Random();
-
     public ReceiverOffset processMessage(ReceiverRecord<String, String> record) {
         ReceiverOffset offset = record.receiverOffset();
-        log.info("record to process -->{}",record);
+        log.info("record to process -->{}", record);
         try {
-            log.info("message->{}",record.value());
+            log.info("message->{}", record.value());
             int rand = r.nextInt(100);
-            if(rand>98){
-                throw new ReceiverRecordException(record,new RuntimeException("Random exception"));
-            }else{
+            if (rand > 98) {
+                throw new ReceiverRecordException(record, new RuntimeException("Random exception"));
+            } else {
 //                int numCore = 8;
 //                int numThreadsPerCore = 2;
 //                double load = 0.8;

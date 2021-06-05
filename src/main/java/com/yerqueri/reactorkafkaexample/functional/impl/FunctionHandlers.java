@@ -24,10 +24,9 @@ import java.util.Date;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FunctionHandlers implements ErrorHandlerFunction, SuccessHandlerFunction {
 
+    SimpleDateFormat dateFormat;
     @Value("${spring.application.time}")
     private String dateFormatString;
-
-    SimpleDateFormat dateFormat;
 
     @PostConstruct
     public void failureJournalWriter() {
